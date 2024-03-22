@@ -1,6 +1,9 @@
 #include <LiquidCrystal_I2C.h>
 #include <DHT.h>
-
+//SCL -> A5
+//SDA -> A4 
+//DHT -> 2
+//Button -> 3
 #define DHTPIN 2
 #define DHTTYPE DHT11
 #define BUTTON_PIN 3  // Chân nối nút nhấn với Arduino
@@ -17,8 +20,6 @@ void setup() {
   lcd.backlight();
   dht.begin();
   pinMode(BUTTON_PIN, INPUT_PULLUP);  // Cài đặt pin nút nhấn là INPUT_PULLUP
-  pinMode(8, OUTPUT);                 // Cài đặt pin nút nhấn là INPUT_PULLUP
-  digitalWrite(8, HIGH);
   Serial.begin(9600);
 }
 
@@ -32,7 +33,7 @@ void loop() {
     int dbClick = 0;
     while (!(dbClick = digitalRead(BUTTON_PIN))) {
       delay(50);
-      if (millis() - time > 1000) break;
+      if (millis() - time > 200) break;
     }
     if (dbClick) {
       lcd.noBacklight();  // Tắt đèn nền LCD
